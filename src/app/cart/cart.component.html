@@ -1,0 +1,39 @@
+<div *ngIf="cart.products.length != 0">
+    <div *ngFor="let product of cart.products">
+        Name: <strong>{{product.name}}</strong>
+        <br>
+        Cost: <strong>${{product.formatTotalPrice()}}</strong>
+        <br>
+        <span *ngIf="product.saleModifier != 0">Cost On Sale:
+            <strong>${{product.formatTotalPrice()}}</strong><br></span>
+        Quantity: <strong>{{product.quantity}}</strong>
+        <br>
+        <button class="btnAdd btnRound" (click)="product.increaseQuantity()">+</button>
+        <button class="btnDecrease btnRound" (click)="product.decreaseQuantity()">-</button>
+        <button class="btnDelete btnRound" (click)="cart.deleteProduct(product)">x</button>
+        <hr class="hr" />
+        <br>
+    </div>
+
+    <div>
+        <br>
+        <strong>Subtotal: {{cart.calculateCost()}}</strong>
+        <br>
+        <strong>Total: {{cart.calculateCostAfterTax()}}</strong>
+        <br>
+        <br>
+        <label>Payment Card: &nbsp;</label>
+        <input [(ngModel)]="paymentCard" type="text">
+        <br>
+        <br>
+        <button class="btn btn-primary" (click)="checkout()">Checkout</button>
+    </div>
+</div>
+
+<div *ngIf="transactionID">
+    Thank you for shopping with us your transaction ID is: <br><strong>{{transactionID}}</strong>
+</div>
+
+<div *ngIf="showError" class="errorMessage">
+    <h1>{{errorMessage}}</h1>
+</div>

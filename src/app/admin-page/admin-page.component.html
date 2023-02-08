@@ -1,0 +1,66 @@
+<h1>Admin Portal</h1>
+
+<ul ngbNav #nav="ngbNav" class="nav-tabs">
+    <li *ngFor="let department of departments" ngbNavItem>
+        <a ngbNavLink>
+            {{department.Name}}
+            <span class="btn-close ms-2 fw-light" (click)="deleteDepartment(department.Name)"></span>
+        </a>
+        <ng-template ngbNavContent>
+
+            <div *ngIf="!isEdit" class="container">
+                <div class="row">
+
+                    <div *ngFor="let product of department.Products" class="card col-lg">
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.productName}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{product.upc}}</h6>
+                            <a (click)="editScreen()" [routerLink]="['edit', product.upc]" class="card-link">Edit</a>
+                            <a (click)="deleteProduct(product.upc!)" class="card-link">Delete</a>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg">
+                        <div class="card-body">
+                            <h5 class="card-title">Add New product</h5>
+                            <a (click)="editScreen()" [routerLink]="['edit']" class="card-link">Add New</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </ng-template>
+    </li>
+
+    <li *ngIf="departments.length != 0" ngbNavItem>
+        <a ngbNavLink>Add Department</a>
+        <ng-template ngbNavContent>
+            <div class="card col-lg">
+                <div class="card-body">
+                    <h5 class="card-title">Department Name</h5>
+                    <input [(ngModel)]="newDepartmentName" type="text">
+                    <button (click)="addNewDepartment()">Add</button>
+                </div>
+            </div>
+        </ng-template>
+    </li>
+
+    <li *ngIf="transactions.length != 0" ngbNavItem>
+        <a ngbNavLink>View Transactions</a>
+        <ng-template ngbNavContent>
+            <div *ngFor="let transaction of transactions" class="card col-lg">
+                <div class="card-body">
+                    <h5 class="card-title">Transaction ID: {{transaction.transactionID}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${{transaction.cost}}</h6>
+                    <h4 *ngFor="let transaction of transaction.products">UPC: {{transaction.upc}} Quantity:
+                        {{transaction.quantity}}</h4>
+                </div>
+            </div>
+        </ng-template>
+    </li>
+</ul>
+
+<div [ngbNavOutlet]="nav"></div>
+
+<router-outlet></router-outlet>

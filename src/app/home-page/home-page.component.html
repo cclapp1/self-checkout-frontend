@@ -1,0 +1,10 @@
+<h1>Welcome To The Self Checkout System!</h1>
+
+<button (click)="adminPage()">Admin Page</button>
+<button [routerLink]="'checkout'">Self Checkout</button>
+
+<div *ngIf="showPasswordInput">
+    <label>Password</label>
+    <input [(ngModel)]="password">
+    <button (click)="navigateToAdmin()">Go</button>
+</div>

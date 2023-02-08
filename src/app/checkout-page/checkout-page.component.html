@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h1>Add Items</h1>
+            <h3>Barcode Scanner:</h3>
+            <button class="btn btn-info" (click)="showScanner = !showScanner">Show/Hide Scanner</button>
+            <app-barcode-scanner *ngIf="showScanner" (codeEvent)="scannedCode($event)"></app-barcode-scanner>
+
+            <br><br><br>
+            <h3>UPC:</h3>
+            <input [(ngModel)]="currentUPC" type="text">
+            <button class="btn btn-success" (click)="manualCode()">Add Item</button>
+        </div>
+
+        <div class=" col-sm">
+            <h1>Cart</h1>
+            <app-cart [cart]="cart"></app-cart>
+        </div>
+    </div>
+</div>
+
+<div class="errorMessage" *ngIf="showError">
+    <h1>{{errorMessage}}</h1>
+</div>
