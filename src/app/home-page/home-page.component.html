@@ -1,10 +1,14 @@
-<h1>Welcome To The Self Checkout System!</h1>
+<div class="titleContainer">
+    <div>
+        <h1>Welcome To The Self Checkout System!</h1>
 
-<button (click)="adminPage()">Admin Page</button>
-<button [routerLink]="'checkout'">Self Checkout</button>
+        <button class="btn btn-secondary" (click)="adminPage()">Admin Page</button>
+        <button class="btn btn-secondary" [routerLink]="'checkout'">Self Checkout</button>
 
-<div *ngIf="showPasswordInput">
-    <label>Password</label>
-    <input [(ngModel)]="password">
-    <button (click)="navigateToAdmin()">Go</button>
+        <form *ngIf="showPasswordInput">
+            <label class="form-label">Password</label>
+            <input class="form-input" name="adminPassword" [(ngModel)]="password">
+            <button class="btn btn-primary" (click)="navigateToAdmin()">Go</button>
+        </form>
+    </div>
 </div>

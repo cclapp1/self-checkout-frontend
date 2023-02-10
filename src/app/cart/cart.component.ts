@@ -37,6 +37,18 @@ export class CartComponent {
     })
   }
 
+  saveCart(): void {
+    if (this.cart.id) {
+      this.updateCart()
+    } else {
+      this.cartSrv.saveCart(this.cart.products).subscribe(cartID => this.cart.id = Number(cartID))
+    }
+  }
+
+  updateCart(): void {
+    this.cartSrv.updateCart(this.cart).subscribe()
+  }
+
   constructor(private cartSrv: CartService) { }
 
 }

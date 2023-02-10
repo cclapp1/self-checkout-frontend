@@ -13,6 +13,7 @@ import { CheckoutPageComponent } from './checkout-page/checkout-page.component';
 import { BarcodeScannerComponent } from './barcode-scanner/barcode-scanner.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { CartComponent } from './cart/cart.component';
+import { AdminTableComponent } from './admin-table/admin-table.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CartComponent } from './cart/cart.component';
     ProductEditorComponent,
     CheckoutPageComponent,
     BarcodeScannerComponent,
-    CartComponent
+    CartComponent,
+    AdminTableComponent
   ],
   imports: [
     BrowserModule,

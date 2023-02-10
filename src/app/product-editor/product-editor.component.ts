@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Department, Product } from '../models/adminModel';
 import { AdminService } from '../services/admin.service';
@@ -12,23 +12,24 @@ export class ProductEditorComponent {
   product: Product | undefined
   departments: Department[] | undefined
 
+  @Output() doneMessage: EventEmitter<void> = new EventEmitter<void>()
+  @Input() UPC: number = 0
+
   newProduct: boolean = false
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(param => {
-      this.adminSrv.getDepartments().subscribe(departments => this.departments = departments)
-      let UPC: string | null = param.get('UPC')
-      if (UPC != null) {
-        this.adminSrv.getProduct(UPC).subscribe(p => {
-          this.product = p
-        })
-      } else {
-        this.product = new Product()
-        this.product.discontinued = false
-        this.product.taxedTf = false
-        this.newProduct = true
-      }
-    })
+    this.adminSrv.getDepartments().subscribe(departments => this.departments = departments)
+
+    if (this.UPC != 0) {
+      this.adminSrv.getProduct(String(this.UPC)).subscribe(p => {
+        this.product = p
+      })
+    } else {
+      this.product = new Product()
+      this.product.discontinued = false
+      this.product.taxedTf = false
+      this.newProduct = true
+    }
   }
 
   submit(): void {
@@ -45,11 +46,11 @@ export class ProductEditorComponent {
   }
 
   done(): void {
-    this.router.navigate(['admin'], { queryParams: { show: true } })
+    this.doneMessage.emit()
   }
 
   cancel(): void {
-    this.router.navigate(['admin'], { queryParams: { show: true } })
+    this.doneMessage.emit()
   }
 
   constructor(private route: ActivatedRoute, private adminSrv: AdminService, private router: Router) { }

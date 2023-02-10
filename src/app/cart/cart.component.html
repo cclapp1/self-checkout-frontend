@@ -2,10 +2,10 @@
     <div *ngFor="let product of cart.products">
         Name: <strong>{{product.name}}</strong>
         <br>
-        Cost: <strong>${{product.formatTotalPrice()}}</strong>
+        Cost: <strong>${{product.calculateTotalPrice()}}</strong>
         <br>
         <span *ngIf="product.saleModifier != 0">Cost On Sale:
-            <strong>${{product.formatTotalPrice()}}</strong><br></span>
+            <strong>${{product.calculateSalePrice()}}</strong><br></span>
         Quantity: <strong>{{product.quantity}}</strong>
         <br>
         <button class="btnAdd btnRound" (click)="product.increaseQuantity()">+</button>
@@ -22,11 +22,15 @@
         <strong>Total: {{cart.calculateCostAfterTax()}}</strong>
         <br>
         <br>
-        <label>Payment Card: &nbsp;</label>
-        <input [(ngModel)]="paymentCard" type="text">
+
+        <form>
+            <label class="form-label">Payment Card</label>
+            <input class="form-control paymentCard" name="paymentCardInput" [(ngModel)]="paymentCard" type="text">
+        </form>
         <br>
         <br>
-        <button class="btn btn-primary" (click)="checkout()">Checkout</button>
+        <button class="btn btn-primary checkoutButton" (click)="checkout()">Checkout</button>
+        <button class="btn btn-success checkoutButton" (click)="saveCart()">Save Cart</button>
     </div>
 </div>
 

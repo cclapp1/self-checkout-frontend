@@ -1,41 +1,42 @@
 <form *ngIf="product">
-    <div *ngIf="newProduct" class="form-group">
-        <label>UPC:</label>
-        <input [(ngModel)]="product.upc" [ngModelOptions]="{standalone: true}" type="text">
+    <div *ngIf="newProduct" class="mb-3">
+        <label class="form-label">UPC</label>
+        <input class="form-control" [(ngModel)]="product.upc" [ngModelOptions]="{standalone: true}" type="text">
     </div>
-    <div class="form-group">
-        <label>Product Name:</label>
-        <input [(ngModel)]="product.productName" [ngModelOptions]="{standalone: true}" type="text">
+    <div class="mb-3">
+        <label class="form-label">Product Name</label>
+        <input class="form-control" [(ngModel)]="product.productName" [ngModelOptions]="{standalone: true}" type="text">
     </div>
-    <div class="form-group">
-        <label>Price:</label>
-        <input [(ngModel)]="product.price" [ngModelOptions]="{standalone: true}" type="text">
+    <div class="mb-3">
+        <label class="form-label">Price</label>
+        <input class="form-control" [(ngModel)]="product.price" [ngModelOptions]="{standalone: true}" type="text">
     </div>
-    <div class="form-group">
-        <label>Sale Percentage:</label>
-        <input [(ngModel)]="product.saleModifier" [ngModelOptions]="{standalone: true}" type="text">
+    <div class="mb-3">
+        <label class="form-label">Sale Percentage</label>
+        <input class="form-control" [(ngModel)]="product.saleModifier" [ngModelOptions]="{standalone: true}"
+            type="text">
     </div>
-    <div class="form-group">
-        <label>Discontinued:</label>
-        <input [(ngModel)]="product.discontinued" [ngModelOptions]="{standalone: true}" class="form-check-input"
-            type="checkbox">
+    <div class="mb-3">
+        <label class="form-label">Discontinued</label><br>
+        <input class="form-control" [(ngModel)]="product.discontinued" [ngModelOptions]="{standalone: true}"
+            class="form-check-input" type="checkbox">
     </div>
-    <div *ngIf="departments" class="form-group">
-        <label>Department:</label>
-        <select [(ngModel)]="product.departmentName" [ngModelOptions]="{standalone: true}">
+    <div *ngIf="departments" class="mb-3">
+        <label class="form-label">Department</label>
+        <select class="form-control" [(ngModel)]="product.departmentName" [ngModelOptions]="{standalone: true}">
             <option *ngFor="let department of departments">{{department.Name}}</option>
         </select>
     </div>
-    <div class="form-group">
-        <label>Quantity:</label>
-        <input [(ngModel)]="product.quantity" [ngModelOptions]="{standalone: true}" type="text">
+    <div class="mb-3">
+        <label class="form-label">Quantity</label>
+        <input class="form-control" [(ngModel)]="product.quantity" [ngModelOptions]="{standalone: true}" type="text">
     </div>
-    <div class="form-group">
-        <label>Taxed:</label>
-        <input [(ngModel)]="product.taxedTf" [ngModelOptions]="{standalone: true}" class="form-check-input"
-            type="checkbox">
+    <div class="mb-3">
+        <label class="form-label">Taxed</label><br>
+        <input class="form-control" [(ngModel)]="product.taxedTf" [ngModelOptions]="{standalone: true}"
+            class="form-check-input" type="checkbox">
     </div>
-    <button *ngIf="!newProduct" (click)="submit()">Edit</button>
-    <button *ngIf="newProduct" (click)="submit()">Create</button>
-    <button (click)="cancel()">Cancel</button>
+    <button class="btn btn-success" *ngIf="!newProduct" (click)="submit()">Edit</button>
+    <button class="btn btn-success" *ngIf="newProduct" (click)="submit()">Create</button>
+    <button class="btn btn-danger" (click)="cancel()">Cancel</button>
 </form>

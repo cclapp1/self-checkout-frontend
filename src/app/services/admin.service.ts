@@ -67,5 +67,9 @@ export class AdminService {
     }))
   }
 
+  getAllProducts(): Observable<Product[]> {
+    return this.http.get(`${this.baseUrl}/getAllProducts`).pipe(map((products: any) => products))
+  }
+
   constructor(private http: HttpClient) { }
 }

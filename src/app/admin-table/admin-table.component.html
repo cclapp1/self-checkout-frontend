@@ -1,0 +1,66 @@
+<table class="table table-striped-columns">
+    <thead class="thead">
+        <tr>
+            <th scope="col">UPC</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Sale Modifier</th>
+            <th scope="col">Discontinued</th>
+            <th scope="col">Department ID</th>
+            <th scope="col">Department Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Taxed</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><button class="btnRound" id="addBtn" data-bs-target="#addNewModal" data-bs-toggle="modal">+</button>
+            </td>
+        </tr>
+
+        <tr *ngFor="let product of products">
+            <th scope="row">{{product.upc}}</th>
+            <td>{{product.productName}}</td>
+            <td>${{product.price}}</td>
+
+            <td *ngIf="product.saleModifier">{{product.saleModifier}}%</td>
+            <td *ngIf="!product.saleModifier">N/A</td>
+
+            <td *ngIf="product.discontinued">Yes</td>
+            <td *ngIf="!product.discontinued">No</td>
+
+            <td>{{product.departmentId}}</td>
+            <td>{{product.departmentName}}</td>
+            <td>{{product.quantity}}</td>
+
+            <td *ngIf="product.taxedTf">Yes</td>
+            <td *ngIf="!product.taxedTf">No</td>
+
+            <td><button class="btnRound" id="deleteBtn" (click)="deleteProduct(product)">X</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="addNewModal" tabindex="-1" aria-labelledby="addNewModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
+                <button type="button" #closeModal class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-product-editor (doneMessage)="editorDone()"></app-product-editor>
+            </div>
+        </div>
+    </div>
+</div>

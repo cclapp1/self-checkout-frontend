@@ -1,5 +1,7 @@
 export class Cart {
+    id?: number
     taxRate: number
+    newCart: boolean = true
 
     products: TrimmedProduct[]
 
@@ -10,77 +12,76 @@ export class Cart {
     calculateCost(): number {
         let totalCost: number = 0
         this.products.forEach(p => {
-            totalCost += p.totalPrice
+            if (p.saleModifier != 0) {
+                totalCost += p.calculateSalePrice()
+            } else {
+                totalCost += p.calculateTotalPrice()
+            }
         })
         return Math.round(totalCost * 100) / 100
     }
 
     calculateCostAfterTax(): number {
-        let cost: number = this.calculateCost()
-        let costAfterTax: number = (cost * this.taxRate) + cost
+        let cost: number = 0
+        this.products.forEach(p => {
+            let itemCost: number = (p.singleCost * p.quantity)
+            if (p.isTaxed) {
+                cost += (itemCost * this.taxRate) + itemCost
+            } else {
+                cost += itemCost
+            }
+        })
 
-        return Math.round(costAfterTax * 100) / 100
+        return Math.round(cost * 100) / 100
     }
 
     deleteProduct(product: TrimmedProduct): void {
         this.products = this.products.filter(p => p.upc != product.upc)
     }
 
-    constructor(taxRate: number) {
-        this.taxRate = taxRate
+    constructor(options: { taxRate: number, id?: number }) {
+        this.taxRate = options.taxRate
         this.products = []
+        this.id = options.id
     }
 }
 
 export class TrimmedProduct {
     upc: string
     name: string
-    totalPrice: number
-    singlePrice: number
-
+    singleCost: number
     saleModifier: number
     quantity: number
-
-    formatTotalPrice(): number {
-        return Math.round(this.totalPrice * 100) / 100
-    }
+    isTaxed: boolean
 
     increaseQuantity(): void {
         this.quantity++
-        this.totalPrice = this.singlePrice * this.quantity
 
-        if (this.saleModifier != 0) {
-            this.totalPrice = this._calculateSalePrice()
-        }
     }
 
     decreaseQuantity(): void {
         if (this.quantity - 1 != 0) {
             this.quantity--
-            this.totalPrice = this.singlePrice * this.quantity
-        }
-
-        if (this.saleModifier != 0) {
-            this.totalPrice = this._calculateSalePrice()
         }
     }
 
-    private _calculateSalePrice(): number {
-        let newSalePrice: number = (this.singlePrice - (this.singlePrice * this.saleModifier)) * this.quantity
+    calculateSalePrice(): number {
+        let newSalePrice: number = (this.singleCost - (this.singleCost * this.saleModifier)) * this.quantity
         return Math.round(newSalePrice * 100) / 100
     }
 
-    constructor(upc: string, name: string, price: number, saleModifier: number) {
-        this.upc = upc
-        this.name = name
-        this.totalPrice = price
-        this.saleModifier = saleModifier
-        this.quantity = 1
-        this.singlePrice = price
+    calculateTotalPrice(): number {
+        let price: number = this.quantity * this.singleCost
+        return Math.round(price * 100) / 100
+    }
 
-        if (this.saleModifier != 0) {
-            this.totalPrice = this._calculateSalePrice()
-        }
+    constructor(options: { upc: string, name: string, singleCost: number, saleModifier: number, isTaxed: boolean, quantity?: number }) {
+        this.upc = options.upc
+        this.name = options.name
+        this.saleModifier = options.saleModifier
+        this.quantity = options.quantity ?? 1
+        this.singleCost = options.singleCost
+        this.isTaxed = options.isTaxed
     }
 }
 

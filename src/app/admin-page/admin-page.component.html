@@ -15,7 +15,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{product.productName}}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{product.upc}}</h6>
-                            <a (click)="editScreen()" [routerLink]="['edit', product.upc]" class="card-link">Edit</a>
+                            <a (click)="editScreen(product.upc)" class="card-link">Edit</a>
                             <a (click)="deleteProduct(product.upc!)" class="card-link">Delete</a>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                     <div class="card col-lg">
                         <div class="card-body">
                             <h5 class="card-title">Add New product</h5>
-                            <a (click)="editScreen()" [routerLink]="['edit']" class="card-link">Add New</a>
+                            <a (click)="editScreen()" class="card-link">Add New</a>
                         </div>
                     </div>
 
@@ -39,8 +39,13 @@
             <div class="card col-lg">
                 <div class="card-body">
                     <h5 class="card-title">Department Name</h5>
-                    <input [(ngModel)]="newDepartmentName" type="text">
-                    <button (click)="addNewDepartment()">Add</button>
+                    <form>
+                        <div class="mb-3">
+                            <input class="form-control" name="newDepartment" [(ngModel)]="newDepartmentName"
+                                type="text">
+                            <button class="btn btn-success" (click)="addNewDepartment()">Add</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </ng-template>
@@ -59,8 +64,19 @@
             </div>
         </ng-template>
     </li>
+
+    <li ngbNavItem>
+        <a ngbNavLink>Product Listings</a>
+        <ng-template ngbNavContent>
+            <app-admin-table></app-admin-table>
+        </ng-template>
+    </li>
+
+
 </ul>
 
 <div [ngbNavOutlet]="nav"></div>
 
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
+<app-product-editor (doneMessage)="isEdit = false && refreshPage()" *ngIf="isEdit"
+    [UPC]="editingUPC"></app-product-editor>

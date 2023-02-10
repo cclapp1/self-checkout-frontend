@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { Product } from '../models/adminModel';
 import { Cart, TrimmedProduct } from '../models/checkoutModel';
@@ -11,7 +12,7 @@ import { CartService } from '../services/cart.service';
 })
 export class CheckoutPageComponent {
   currentUPC: string = ''
-  cart: Cart = new Cart(0)
+  cart: Cart = new Cart({ taxRate: 0 })
   showScanner: boolean = false
 
   errorMessage: string = ''
@@ -27,7 +28,7 @@ export class CheckoutPageComponent {
     if (!this.cart.products.find(p => p.upc == this.currentUPC)) {
       this.cartSrv.getProduct(this.currentUPC)
         .pipe(
-          catchError(err => of(new TrimmedProduct('error', 'error', 0, 0)))
+          catchError(err => of(new TrimmedProduct({ name: 'error', upc: 'error', singleCost: 0, saleModifier: 0, isTaxed: false })))
         )
         .subscribe(product => {
           if (product.name != 'error') {
@@ -45,6 +46,21 @@ export class CheckoutPageComponent {
 
   ngOnInit(): void {
     this.cartSrv.getTaxRate().subscribe(rate => this.cart.taxRate = rate)
+  }
+
+  loadCart(): void {
+    if (this.cart.id) {
+      this.cartSrv.getCart(String(this.cart.id)).subscribe({
+        next: (cart) => {
+          this.cart = cart
+        },
+        error: (err) => {
+          this.cart = new Cart({ taxRate: this.cart.taxRate })
+        }
+      })
+
+    }
+
   }
 
   constructor(private cartSrv: CartService) { }

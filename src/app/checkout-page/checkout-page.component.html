@@ -7,12 +7,27 @@
             <app-barcode-scanner *ngIf="showScanner" (codeEvent)="scannedCode($event)"></app-barcode-scanner>
 
             <br><br><br>
-            <h3>UPC:</h3>
-            <input [(ngModel)]="currentUPC" type="text">
+
+            <form>
+                <div class="mb-3">
+                    <label>UPC</label>
+                    <input class="form-control" name="upcInput" [(ngModel)]="currentUPC" type="text">
+                </div>
+            </form>
+
             <button class="btn btn-success" (click)="manualCode()">Add Item</button>
         </div>
 
         <div class=" col-sm">
+            <form>
+                <div class="mb-3">
+                    <label>Cart ID</label>
+                    <input class="form-control" name="upcInput" [(ngModel)]="cart.id" type="text">
+                    <button (click)="loadCart()" class="btn btn-primary">Go</button>
+                </div>
+            </form>
+
+
             <h1>Cart</h1>
             <app-cart [cart]="cart"></app-cart>
         </div>

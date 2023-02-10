@@ -9,7 +9,6 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminPageComponent,
-    children: [{ path: 'edit/:UPC', component: ProductEditorComponent }, { path: 'edit', component: ProductEditorComponent }]
   },
   {
     path: '',

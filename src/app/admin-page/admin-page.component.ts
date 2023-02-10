@@ -17,6 +17,8 @@ export class AdminPageComponent {
 
   isEdit: boolean = false
 
+  editingUPC: number = 0
+
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(item => {
       let reset: string | null = item.get('show')
@@ -30,6 +32,7 @@ export class AdminPageComponent {
   }
 
   refreshPage(): void {
+    this.isEdit = false
     this.adminSrv.getDepartments()
       .subscribe(departments => {
         this.departments = departments
@@ -46,7 +49,10 @@ export class AdminPageComponent {
     this.adminSrv.deleteProduct(UPC).subscribe(d => this.refreshPage())
   }
 
-  editScreen(): void {
+  editScreen(UPC?: number): void {
+    if (UPC) {
+      this.editingUPC = UPC
+    }
     this.isEdit = true
   }
 
