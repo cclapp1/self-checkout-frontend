@@ -1,0 +1,15 @@
+<dx-chart id="chart" [dataSource]="dataSource" palette="soft">
+    <dxo-title text="Departments with Product Count">
+    </dxo-title>
+
+    <dxi-series argumentField="departmentName" valueField="count" name="Count of Products" type="bar">
+        <dxo-label [visible]="true"></dxo-label>
+    </dxi-series>
+
+    <dxo-argument-axis>
+        <dxo-label displayMode="stagger" [staggeringSpacing]="1">
+        </dxo-label>
+    </dxo-argument-axis>
+
+
+</dx-chart>

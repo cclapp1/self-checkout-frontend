@@ -1,4 +1,4 @@
-import { Component, Host, HostBinding } from '@angular/core';
+import { Component, Host, HostBinding, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +8,7 @@ import { Component, Host, HostBinding } from '@angular/core';
 export class AppComponent {
   title = 'self-checkout-frontend';
 
+  constructor(private render: Renderer2) {
+    this.render.setAttribute(document.body, 'data-bs-theme', 'dark')
+  }
 }

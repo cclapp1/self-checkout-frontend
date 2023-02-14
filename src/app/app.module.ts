@@ -15,6 +15,10 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { CartComponent } from './cart/cart.component';
 import { AdminTableComponent } from './admin-table/admin-table.component';
 
+import { DevExtremeModule, DxChartComponent, DxChartModule, DxDataGridModule, DxLookupModule } from 'devextreme-angular';
+import { DataGridComponent } from './data-grid/data-grid.component';
+import { DepartmentGraphComponent } from './department-graph/department-graph.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +28,9 @@ import { AdminTableComponent } from './admin-table/admin-table.component';
     CheckoutPageComponent,
     BarcodeScannerComponent,
     CartComponent,
-    AdminTableComponent
+    AdminTableComponent,
+    DataGridComponent,
+    DepartmentGraphComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +38,10 @@ import { AdminTableComponent } from './admin-table/admin-table.component';
     NgbModule,
     HttpClientModule,
     FormsModule,
-    ZXingScannerModule
+    ZXingScannerModule,
+    DxDataGridModule,
+    DxLookupModule,
+    DxChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]

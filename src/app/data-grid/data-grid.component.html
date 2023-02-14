@@ -1,0 +1,36 @@
+<dx-data-grid id="gridContainer" [dataSource]="dataSource" (onEditorPreparing)="prepEdit($event)">
+    <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+
+
+        <dxo-popup title="Edit/Add New Product" [showTitle]="true" [width]="700" [height]="525">
+        </dxo-popup>
+
+    </dxo-editing>
+
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+    <dxo-grouping [contextMenuEnabled]="true">
+    </dxo-grouping>
+    <dxo-group-panel [visible]="true">
+    </dxo-group-panel>
+
+    <dxo-export [enabled]="true"></dxo-export>
+
+    <dxi-column [width]="130" dataField="Upc"></dxi-column>
+    <dxi-column [width]="350" dataField="ProductName"></dxi-column>
+    <dxi-column [width]="70" dataField="Price"></dxi-column>
+    <dxi-column [width]="100" dataField="SaleModifier"></dxi-column>
+    <dxi-column [width]="150" dataField="DiscontinuedTf"></dxi-column>
+    <dxi-column [width]="80" dataField="Quantity"></dxi-column>
+    <dxi-column [width]="100" dataField="TaxedTf"></dxi-column>
+    <dxi-column dataField="DepartmentId" caption="Department">
+        <dxo-lookup [dataSource]="dataSourceDepartments" valueExpr="Id" displayExpr="DeptName"></dxo-lookup>
+    </dxi-column>
+
+    <dxo-paging [pageSize]="10"> </dxo-paging>
+
+    <dxo-pager [visible]="true" [allowedPageSizes]="'10'" [displayMode]="'full'" [showPageSizeSelector]="false"
+        [showInfo]="true" [showNavigationButtons]="true">
+    </dxo-pager>
+
+</dx-data-grid>
